@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  include Addressable
+
   has_and_belongs_to_many :genres
   has_many :event_artists
   has_many :artists, through: :event_artists
