@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :artists_event do
+  factory :event_artist do
     
   end
 end

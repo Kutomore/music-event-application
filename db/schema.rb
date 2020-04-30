@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_203826) do
+ActiveRecord::Schema.define(version: 2020_04_30_213222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,17 +22,35 @@ ActiveRecord::Schema.define(version: 2020_04_30_203826) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "artists_events", id: false, force: :cascade do |t|
-    t.uuid "event_id", null: false
-    t.uuid "artist_id", null: false
-    t.index ["artist_id"], name: "index_artists_events_on_artist_id"
-    t.index ["event_id"], name: "index_artists_events_on_event_id"
+  create_table "event_artists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "event_id"
+    t.uuid "artist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "playing_order"
+    t.index ["artist_id"], name: "index_event_artists_on_artist_id"
+    t.index ["event_id", "playing_order"], name: "by_playing_order_and_event", unique: true
+    t.index ["event_id"], name: "index_event_artists_on_event_id"
   end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "event_type"
     t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "events_genres", id: false, force: :cascade do |t|
+    t.uuid "event_id", null: false
+    t.uuid "genre_id", null: false
+    t.index ["event_id"], name: "index_events_genres_on_event_id"
+    t.index ["genre_id"], name: "index_events_genres_on_genre_id"
+  end
+
+  create_table "genres", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
