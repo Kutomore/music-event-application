@@ -6,7 +6,10 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all.decorate
+    @events = Event
+              .with_genre(params[:genre_ids])
+              .with_artist(params[:artist_ids])
+              .decorate
   end
 
   # GET /events/1

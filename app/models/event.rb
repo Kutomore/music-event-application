@@ -12,5 +12,14 @@ class Event < ApplicationRecord
 
   enum event_type: { concert: 0, festival: 1 }
 
+  default_scope { order(date: :asc) }
+
+  scope :with_genre, lambda { |genre_ids = nil|
+    joins(:genres).where(genres: { id: genre_ids }) unless genre_ids.blank?
+  }
+  scope :with_artist, lambda { |artist_ids = nil|
+    joins(:artists).where(artists: { id: artist_ids }) unless artist_ids.blank?
+  }
+
   accepts_nested_attributes_for :address
 end
