@@ -1,19 +1,28 @@
-<div class="field">
-  <%= address_form.label :street %>
-  <%= address_form.text_field :street %>
+<div class="form-group">
+  <%= ff.label :street, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= ff.text_field :street, :class => 'form-control' %>
+  </div>
+  <%=ff.error_span(:street) %>
 </div>
-
-<div class="field">
-  <%= address_form.label :city %>
-  <%= address_form.text_field :city %>
+<div class="form-group">
+  <%= ff.label :city, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= ff.text_field :city, :class => 'form-control' %>
+  </div>
+  <%=ff.error_span(:city) %>
 </div>
-
-<div class="field">
-  <%= address_form.label :state %>
-  <%= address_form.text_field :state %>
+<div class="form-group">
+  <%= ff.label :state, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= ff.text_field :state, :class => 'form-control' %>
+  </div>
+  <%=ff.error_span(:state) %>
 </div>
-
-<div class="field">
-  <%= address_form.label :zip %>
-  <%= address_form.text_field :zip %>
+<div class="form-group">
+  <%= ff.label :zip, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= ff.text_field :zip, :class => 'form-control' %>
+  </div>
+  <%=ff.error_span(:zip) %>
 </div>
