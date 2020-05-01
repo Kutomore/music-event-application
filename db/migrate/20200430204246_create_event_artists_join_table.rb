@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateEventArtistsJoinTable < ActiveRecord::Migration[6.0]
   def change
     create_table :event_artists, id: :uuid do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EventDecorator < Draper::Decorator
   delegate_all
   decorates_association :address

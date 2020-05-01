@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EventArtist < ApplicationRecord
   belongs_to :artist
   belongs_to :event
