@@ -5,22 +5,24 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:event_type) %></th>
       <th><%= model_class.human_attribute_name(:date) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:genres) %></th>
+      <th><%= model_class.human_attribute_name(:artists) %></th>
+      <th><%= model_class.human_attribute_name(:address) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @events.each do |event| %>
       <tr>
-        <td><%= link_to event.id, event_path(event) %></td>
         <td><%= event.name %></td>
         <td><%= event.event_type %></td>
         <td><%= event.date %></td>
-        <td><%=l event.created_at %></td>
+        <td><%= event.genres %></td>
+        <td><%= event.artists %></td>
+        <td><%= event.address %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_event_path(event), :class => 'btn btn-default btn-xs' %>
