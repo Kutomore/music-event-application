@@ -1,25 +1,28 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: %i[show edit update destroy]
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = Event.all.decorate
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @event = @event.decorate
   end
 
   # GET /events/new
   def new
     @event = Event.new
+    @event.build_address
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /events
   # POST /events.json
@@ -62,13 +65,27 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def event_params
-      params.require(:event).permit(:name, :event_type, :date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def event_params
+    params.require(:event).permit(
+      :name,
+      :event_type,
+      :date,
+      :artist_ids,
+      :genre_ids,
+      address_attributes: %i[
+        id
+        street
+        city
+        state
+        zip
+      ]
+    )
+  end
 end

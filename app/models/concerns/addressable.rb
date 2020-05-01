@@ -4,6 +4,6 @@ module Addressable
   extend ActiveSupport::Concern
 
   included do
-    has_many :addresses, as: :addressable
+    has_one :address, as: :addressable
   end
 end

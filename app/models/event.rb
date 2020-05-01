@@ -6,8 +6,9 @@ class Event < ApplicationRecord
   has_many :artists, through: :event_artists
 
   validates :event_artists, length: { maximum: 1 }, if: :concert?
-  validates :genres, length: { minimum: 1 }
-  validates_presence_of :date, :addresses
+  validates_presence_of :date, :address, :genres
 
   enum event_type: { concert: 0, festival: 1 }
+
+  accepts_nested_attributes_for :address
 end

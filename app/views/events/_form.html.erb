@@ -18,12 +18,29 @@
 
   <div class="field">
     <%= form.label :event_type %>
-    <%= form.number_field :event_type %>
+    <% # FIXME fix this selector %>
+    <%= form.select :event_type, options_for_select(Event.event_types.map {|k, v| [k.humanize.capitalize, k]}) %>
   </div>
 
   <div class="field">
     <%= form.label :date %>
-    <%= form.date_select :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Artists %>
+    <%= form.collection_select(:artist_ids, Artist.all, :id, :name, {:selected => @event.artist_ids, :multiple => true} )%>
+  </div>
+
+  <div class="field">
+    <%= form.label :Genres %>
+    <%= form.collection_select(:genre_ids, Genre.all, :id, :name, {:selected => @event.genre_ids, :multiple => true} )%>
+  </div>
+
+  <div class="field">
+    <%= form.fields_for :address do |address_form|%>
+      <%= render partial: 'addresses/form', locals: { address_form: address_form }  %>
+    <% end %>
   </div>
 
   <div class="actions">
