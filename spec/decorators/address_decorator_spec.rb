@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+describe AddressDecorator do
+  let(:address) { build(:address).decorate }
 
-RSpec.describe AddressDecorator do
+  it 'returns a formatted string' do
+    expect(address.to_s).to eq(
+      [
+        address.street,
+        address.state,
+        address.city,
+        address.zip
+      ].select(
+        &:present?
+      ).join(', ')
+    )
+  end
 end

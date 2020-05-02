@@ -7,8 +7,8 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event
-              .with_genre(params[:genre_ids])
-              .without_genre(params[:exclude_genre_ids])
+              .with_genres(params[:genre_ids])
+              .without_genres(params[:exclude_genre_ids])
               .with_past_date(params[:with_past_date])
               .decorate
               .distinct

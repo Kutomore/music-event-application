@@ -14,12 +14,12 @@ class Event < ApplicationRecord
 
   default_scope { order(date: :asc) }
 
-  scope :without_genre, lambda { |genre_ids = nil|
+  scope :without_genres, lambda { |genre_ids = nil|
     unless genre_ids.blank?
       left_joins(:genres).where.not(genres: { id: genre_ids })
     end
   }
-  scope :with_genre, lambda { |genre_ids = nil|
+  scope :with_genres, lambda { |genre_ids = nil|
     joins(:genres).where(genres: { id: genre_ids }) unless genre_ids.blank?
   }
   scope :with_past_date, lambda { |value = nil|
