@@ -9,6 +9,7 @@ class EventsController < ApplicationController
     @events = Event
               .with_genre(params[:genre_ids])
               .without_genre(params[:exclude_genre_ids])
+              .with_past_date(params[:with_past_date])
               .decorate
               .distinct
               .includes(:genres, :artists, :address)

@@ -14,13 +14,20 @@ class Event < ApplicationRecord
 
   default_scope { order(date: :asc) }
 
-  before_save { binding.pry if address.blank? || !address.valid?}
-
   scope :without_genre, lambda { |genre_ids = nil|
-    left_joins(:genres).where.not(genres: { id: genre_ids }) unless genre_ids.blank?
+    unless genre_ids.blank?
+      left_joins(:genres).where.not(genres: { id: genre_ids })
+    end
   }
   scope :with_genre, lambda { |genre_ids = nil|
     joins(:genres).where(genres: { id: genre_ids }) unless genre_ids.blank?
+  }
+  scope :with_past_date, lambda { |value = nil|
+    if ActiveModel::Type::Boolean.new.cast(value&.downcase)
+      where('date < ?', DateTime.current)
+    else
+      where('date > ?', DateTime.current)
+    end
   }
 
   accepts_nested_attributes_for :address
