@@ -8,8 +8,11 @@ class EventsController < ApplicationController
   def index
     @events = Event
               .with_genre(params[:genre_ids])
-              .with_artist(params[:artist_ids])
+              .without_genre(params[:exclude_genre_ids])
               .decorate
+              .distinct
+              .includes(:genres, :artists, :address)
+
   end
 
   # GET /events/1
@@ -80,8 +83,8 @@ class EventsController < ApplicationController
       :name,
       :event_type,
       :date,
-      :artist_ids,
-      :genre_ids,
+      artist_ids: [],
+      genre_ids: [],
       address_attributes: %i[
         id
         street

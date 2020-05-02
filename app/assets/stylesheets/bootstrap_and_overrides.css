@@ -45,8 +45,16 @@
     width: 90%;
 }
 
+.checkbox-list {
+    margin-top: 10px;
+}
 .label-checkbox {
     margin-right: 10px;
+}
+
+.no-side-padding {
+    padding-right: 1px;
+    padding-left: 1px;
 }
 
 .form-control-checkboxes {
@@ -64,5 +72,23 @@
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     overflow-y: scroll;
+}
+
+.form-control-checkboxes_tall {
+    min-height: 150px;
+    max-height: 150px;
+}
+
+.checkbox-container {
+    display: inline-block;
+    vertical-align: -1px;
+    margin: 5px;
+}
+.checkbox-container input {
+    display: inline;
+}
+.checkbox-container .collection_check_boxes{
+    display: inline;
+    vertical-align: -5px;
 }
 

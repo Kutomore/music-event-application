@@ -2,40 +2,75 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:event_type) %></th>
-      <th><%= model_class.human_attribute_name(:date) %></th>
-      <th><%= model_class.human_attribute_name(:genres) %></th>
-      <th><%= model_class.human_attribute_name(:artists) %></th>
-      <th><%= model_class.human_attribute_name(:address) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= event.name %></td>
-        <td><%= event.event_type %></td>
-        <td><%= event.date %></td>
-        <td><%= event.genres %></td>
-        <td><%= event.artists %></td>
-        <td><%= event.address %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_event_path(event), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      event_path(event),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<form action="" method="get">
+  <div class="row">
+    <div class="col-sm-8">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><%= model_class.human_attribute_name(:name) %></th>
+          <th><%= model_class.human_attribute_name(:event_type) %></th>
+          <th><%= model_class.human_attribute_name(:date) %></th>
+          <th><%= model_class.human_attribute_name(:genres) %></th>
+          <th><%= model_class.human_attribute_name(:artists) %></th>
+          <th><%= model_class.human_attribute_name(:address) %></th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= event.name %></td>
+            <td><%= event.event_type %></td>
+            <td><%=l event.date %></td>
+            <td><%= event.genres %></td>
+            <td><%= event.artists %></td>
+            <td><%= event.address %></td>
+            <td>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_event_path(event), :class => 'btn btn-default btn-xs' %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          event_path(event),
+                          :method => :delete,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :class => 'btn btn-xs btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-4">
+      <div class="well sidebar-nav no-side-padding">
+        <h3>Filters</h3>
+        <div class="nav nav-list">
+          <input id="SearchBar" placeholder="Search for options.." type="text" oninput="updateCheckboxes(this)" autocomplete="off">
+          <div class="col-md-6 checkbox-list no-side-padding">
+            <div class="nav-header">Include these genres</div>
+            <div class="form-control-checkboxes form-control-checkboxes_tall">
+              <%= collection_check_boxes(nil, :genre_ids, Genre.where.not(id: params[:exclude_genre_ids]), :id, :name, {include_hidden: false}) do |b| %>
+                <%= b.label { b.check_box(checked: params[:genre_ids]&.include?(b.value), text: b.text) + b.text } %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-md-6 checkbox-list no-side-padding">
+            <div class="nav-header">Exclude these genres</div>
+            <div class="form-control-checkboxes form-control-checkboxes_tall">
+              <%= collection_check_boxes(nil, :exclude_genre_ids, Genre.where.not(id: params[:genre_ids]), :id, :name, {include_hidden: false}) do |b| %>
+                <%= b.label { b.check_box(checked: params[:exclude_genre_ids]&.include?(b.value), text: b.text) + b.text } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav nav-list" style="margin-top: 10px">
+          <%= submit_tag "Apply", class: 'btn btn-primary' %>
+          <%= submit_tag "Clear", class: 'btn btn-info', onclick: "uncheckAll(event)" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_event_path,
