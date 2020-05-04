@@ -10,8 +10,21 @@ describe Event do
   it { is_expected.to define_enum_for(:event_type).with_values(concert: 0, festival: 1) }
 
   context 'is a concert' do
-    before { allow(subject).to receive(:concert?).and_return(true) }
-    it { is_expected.to validate_length_of(:artists).is_at_most(1) }
+    context 'with a single artist' do
+      subject { create(:event, :with_genres, :with_event_artists, :with_address, event_type: :concert) }
+      it { is_expected.to be_valid }
+      it 'has a single artist' do
+        expect(subject.artists.count).to eq(1)
+      end
+    end
+    context 'with multiple artists' do
+      subject { create(:event, :with_genres, :with_event_artists, :with_address, event_type: :festival) }
+      before { subject.event_type = :concert }
+      it { is_expected.not_to be_valid }
+      it 'has multiple artists' do
+        expect([0, 1]).not_to include(subject.artists.count)
+      end
+    end
   end
 
   it 'is correctly ordered' do
@@ -19,10 +32,9 @@ describe Event do
 
     [1.minute.ago, 5.minutes.ago, 1.hour.ago].each_with_index do |time, index|
       event = events[index]
-      event.created_at = time
+      event.date = time
       event.save
     end
-
     sorted_events = Event.all
     expect(events.first).to eq(sorted_events.last)
     expect(events.second).to eq(sorted_events.second)
@@ -30,8 +42,8 @@ describe Event do
   end
 
   describe '.without_genres' do
-    event = create(:event, :with_address, :with_event_artists, :with_genres)
-    genre_id = create(:genre, name: 'test_genre').id
+    let(:event) { create(:event, :with_address, :with_event_artists, :with_genres) }
+    let(:genre_id) { create(:genre, name: 'test_genre').id }
     it 'includes events without the genre' do
       expect(Event.without_genres(genre_id)).to include(event)
     end
@@ -40,13 +52,28 @@ describe Event do
     end
   end
 
-  describe '.without_genres' do
-    event = create(:event, :with_address, :with_event_artists, :with_genres)
-    genre_id = create(:genre, name: 'test_genre').id
-    it 'includes events without the genre' do
-      expect(Event.without_genres(genre_id)).to include(event)
+  describe '.with_genres' do
+    let(:event) { create(:event, :with_address, :with_event_artists, :with_genres) }
+    let(:genre_id) { create(:genre, name: 'test_genre').id }
+    it 'includes events with the genre' do
+      expect(Event.with_genres(event.genre_ids)).to include(event)
     end
     it 'excludes events without the genre' do
+      expect(Event.with_genres(genre_id)).not_to include(event)
     end
+  end
+
+  describe '.with_past_date' do
+    let(:past_event) { create(:event, :with_address, :with_event_artists, :with_genres, date: DateTime.current - 1.days) }
+    let(:future_event) { create(:event, :with_address, :with_event_artists, :with_genres, date: DateTime.current + 1.days) }
+    it 'shows only events in the past when true' do
+      expect(Event.with_past_date('true')).to include(past_event)
+      expect(Event.with_past_date('true')).not_to include(future_event)
+    end
+    it 'shows only events in the future when false' do
+      expect(Event.with_past_date('false')).to include(future_event)
+      expect(Event.with_past_date('false')).not_to include(past_event)
+    end
+
   end
 end

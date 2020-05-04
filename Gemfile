@@ -24,6 +24,7 @@ group :development, :test do
   gem 'faker', '~> 2.11'
   gem 'factory_bot_rails'
   gem 'pry-byebug'
+  gem 'pry-stack_explorer'
   gem 'rspec-rails', '~> 4.0.0'
 end
 
@@ -35,6 +36,7 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end

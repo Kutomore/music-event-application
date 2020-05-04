@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'artists/edit', type: :view do
+describe 'artists/edit' do
   before(:each) do
     @artist = assign(:artist, Artist.create!(
                                 name: 'MyString'

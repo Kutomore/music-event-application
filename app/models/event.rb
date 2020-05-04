@@ -7,7 +7,7 @@ class Event < ApplicationRecord
   has_many :event_artists, dependent: :delete_all
   has_many :artists, through: :event_artists
 
-  validates :event_artists, length: { maximum: 1 }, if: :concert?
+  validate :event_artists_size, if: :concert?
   validates_presence_of :date, :address, :genres
 
   enum event_type: { concert: 0, festival: 1 }
@@ -31,4 +31,10 @@ class Event < ApplicationRecord
   }
 
   accepts_nested_attributes_for :address
+
+  private
+
+  def event_artists_size
+    errors.add(:event_artists, 'concerts can only have one artist') if event_artists.count > 1
+  end
 end

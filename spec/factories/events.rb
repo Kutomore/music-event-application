@@ -9,7 +9,7 @@ FactoryBot.define do
     trait :with_event_artists do
       after(:build) do |event|
         if event.festival?
-          event.event_artists << build_list(:event_artist, rand(1..10), :with_artist, event: event)
+          event.event_artists << build_list(:event_artist, rand(2..10), :with_artist, event: event)
         else
           event.event_artists << build(:event_artist, :with_artist, event: event)
         end

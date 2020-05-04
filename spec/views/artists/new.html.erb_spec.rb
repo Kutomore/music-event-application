@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'artists/new', type: :view do
+describe 'artists/new' do
   before(:each) do
     assign(:artist, Artist.new(
                       name: 'MyString'

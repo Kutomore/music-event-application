@@ -1,24 +1,23 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'events/index', type: :view do
+describe 'events/index' do
   before(:each) do
-    assign(:events, [
-             Event.create!(
-               name: 'Name',
-               event_type: 2
-             ),
-             Event.create!(
-               name: 'Name',
-               event_type: 2
-             )
-           ])
+    assign(:events, create_list(:event, 2, :with_address, :with_genres, :with_event_artists))
   end
 
   it 'renders a list of events' do
     render
-    assert_select 'tr>td', text: 'Name'.to_s, count: 2
-    assert_select 'tr>td', text: 2.to_s, count: 2
+    assert_select 'tr', count: 3
+    assert_select 'td', count: 14
+    assert_select 'a[href=?]', '/events/new'
+    assert_select 'a', text: 'Edit'
+    assert_select 'a', text: 'Delete'
+  end
+  it 'renders the filters' do
+    render
+    assert_select 'input[id=?][placeholder=?][oninput=?]', 'SearchBar', 'Search for options..', 'updateCheckboxes(this)'
+    assert_select 'div[class=?]', 'col-md-6 checkbox-list no-side-padding', count: 2
+    assert_select 'input[name=?][type=?]', 'commit', 'submit'
+    assert_select 'input[name=?][type=?][onclick=?]', 'commit', 'submit', 'uncheckAll(event)'
   end
 end

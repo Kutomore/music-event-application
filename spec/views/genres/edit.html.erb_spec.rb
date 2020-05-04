@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'genres/edit', type: :view do
+describe 'genres/edit' do
   before(:each) do
     @genre = assign(:genre, Genre.create!(
                               name: 'MyString',
@@ -16,7 +14,7 @@ RSpec.describe 'genres/edit', type: :view do
     assert_select 'form[action=?][method=?]', genre_path(@genre), 'post' do
       assert_select 'input[name=?]', 'genre[name]'
 
-      assert_select 'textarea[name=?]', 'genre[description]'
+      assert_select 'input[name=?]', 'genre[description]'
     end
   end
 end

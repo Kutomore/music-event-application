@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'genres/index', type: :view do
+describe 'genres/index' do
   before(:each) do
     assign(:genres, [
              Genre.create!(

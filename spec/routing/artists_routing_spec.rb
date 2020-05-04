@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe ArtistsController, type: :routing do
+describe ArtistsController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/artists').to route_to('artists#index')

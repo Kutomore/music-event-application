@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe 'events/show', type: :view do
+describe 'events/show' do
   before(:each) do
-    @event = assign(:event, Event.create!(
-                              name: 'Name',
-                              event_type: 2
-                            ))
+    @event = assign(:event, create(:event, :with_address, :with_genres, :with_event_artists))
   end
 
   it 'renders attributes in <p>' do
