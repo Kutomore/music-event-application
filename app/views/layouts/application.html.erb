@@ -19,7 +19,7 @@
   <body>
 
     <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
+      <div class="container" style="margin: 0; width: 100%">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -33,6 +33,46 @@
             <li><%= link_to "Past events", "/events?with_past_date=true"  %></li>
             <% # TODO implement past events %>
           </ul>
+          <% if user_signed_in? %>
+            Bem vindo
+          <% else %>
+            <ul class="nav navbar-nav navbar-right">
+              <li><p class="navbar-text">Already have an account?</p></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                <ul id="login-dp" class="dropdown-menu">
+                  <li>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <%= form_for(:user, html: { class: "form" }, :url => session_path(:user)) do |f| %>
+                          <div class="form-group">
+                            <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                            <%= f.text_field :email, placeholder: :email, class: 'vertical-center' %>
+                          </div>
+                          <div class="form-group">
+                            <label class="sr-only" for="exampleInputPassword2">Password</label>
+                            <%= f.password_field :password, placeholder: :password, class: 'vertical-center' %>
+                            <div class="help-block text-right"><a href="">Forgot the password ?</a></div>
+                          </div>
+                          <div class="form-group">
+                            <%= f.submit 'Sign in' %>
+                          </div>
+                          <div class="checkbox">
+                            <label>
+                              <%= f.check_box :remember_me, class: 'vertical-center' %> keep me logged-in
+                            </label>
+                          </div>
+                        <% end %>
+                      </div>
+                      <div class="bottom text-center">
+                        New here ? <b><%= link_to 'Join Us', new_user_registration_path %></b>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
         </div>
       </div>
     </div>

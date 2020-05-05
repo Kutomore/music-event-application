@@ -7,4 +7,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :profile
+
+  accepts_nested_attributes_for :profile
 end

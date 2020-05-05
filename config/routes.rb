@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :artists
   resources :genres
   resources :events
-  devise_for :users
+
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   root to: 'events#index'
 end

@@ -21,24 +21,24 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <%= f.fields_for :profile_attributes,@profile = Profile.new do |ff|%>
-    <div class="field">
+  <%= f.fields_for :profile do |ff|%>
+    <div class="field hidden second-step">
       <%= ff.text_field :name, placeholder: 'Name' %>
     </div>
 
-    <div class="field second-step">
+    <div class="field hidden second-step">
       <%= ff.text_field :email, placeholder: 'Email' %>
     </div>
 
-    <div class="field second-step">
+    <div class="field hidden second-step">
       <%= ff.text_field :phone, placeholder: 'Phone' %>
     </div>
 
-    <div class="field second-step">
+    <div class="field hidden second-step">
       <%= ff.number_field :gender, placeholder: 'Gender' %>
     </div>
 
-    <div class="field second-step mb-5">
+    <div class="field hidden second-step mb-5">
       <%= ff.text_field :birthdate, placeholder: 'Birthdate' %>
     </div>
   <% end %>
