@@ -31,10 +31,16 @@
             <li><%= link_to "Artists", "/artists"  %></li>
             <li><%= link_to "Genres", "/genres"  %></li>
             <li><%= link_to "Past events", "/events?with_past_date=true"  %></li>
-            <% # TODO implement past events %>
           </ul>
           <% if user_signed_in? %>
-            Bem vindo
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <p class="navbar-text vertical-center">Bem vindo <b><%= current_user.profile.name %></b></p>
+                <div class="bottom text-center">
+                  <b><%= link_to 'Log out', destroy_user_session_path, method: :delete  %></b>
+                </div>
+              </li>
+            </ul>
           <% else %>
             <ul class="nav navbar-nav navbar-right">
               <li><p class="navbar-text">Already have an account?</p></li>

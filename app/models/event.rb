@@ -12,8 +12,6 @@ class Event < ApplicationRecord
 
   enum event_type: { concert: 0, festival: 1 }
 
-  default_scope { order(date: :asc) }
-
   scope :without_genres, lambda { |genre_ids = nil|
     unless genre_ids.blank?
       left_joins(:genres).where.not(genres: { id: genre_ids })
@@ -24,9 +22,9 @@ class Event < ApplicationRecord
   }
   scope :with_past_date, lambda { |value = nil|
     if ActiveModel::Type::Boolean.new.cast(value&.downcase)
-      where('date < ?', DateTime.current)
+      where('date < ?', DateTime.current).order(date: :desc)
     else
-      where('date > ?', DateTime.current)
+      where('date > ?', DateTime.current).order(date: :asc)
     end
   }
 

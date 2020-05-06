@@ -8,5 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :profile
 
+  delegate :time_zone, to: :profile
+
   accepts_nested_attributes_for :profile
 end

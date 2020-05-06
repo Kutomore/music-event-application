@@ -6,7 +6,12 @@
   <div class="row">
     <div class="col-sm-8">
       <table class="table table-striped">
-        <thead>
+      <% @events.group_by{|event| event.date.to_date}.each do |day| %>
+
+      <thead>
+        <tr>
+          <td colspan="7"><%= day[0] %></td>
+        </tr>
         <tr>
           <th><%= model_class.human_attribute_name(:name) %></th>
           <th><%= model_class.human_attribute_name(:event_type) %></th>
@@ -17,8 +22,8 @@
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
         </thead>
-        <tbody>
-        <% @events.each do |event| %>
+      <tbody>
+        <% day[1].each do |event| %>
           <tr>
             <td><%= event.name %></td>
             <td><%= event.event_type %></td>
@@ -37,7 +42,8 @@
             </td>
           </tr>
         <% end %>
-        </tbody>
+      </tbody>
+      <% end %>
       </table>
     </div>
     <div class="col-sm-4">
