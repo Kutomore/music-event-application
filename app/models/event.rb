@@ -28,8 +28,6 @@ class Event < ApplicationRecord
     end
   }
 
-  accepts_nested_attributes_for :address
-
   private
 
   def event_artists_size
