@@ -3,6 +3,7 @@
 class Profile < ApplicationRecord
   include Addressable
   has_one :user
+  has_and_belongs_to_many :genres
 
   enum gender: { undisclosed: 0, female: 1, male: 2, other: 3 }
 

@@ -27,20 +27,6 @@ describe Event do
     end
   end
 
-  it 'is correctly ordered' do
-    events = FactoryBot.create_list(:event, 3, :with_genres, :with_event_artists, :with_address)
-
-    [1.minute.ago, 5.minutes.ago, 1.hour.ago].each_with_index do |time, index|
-      event = events[index]
-      event.date = time
-      event.save
-    end
-    sorted_events = Event.all
-    expect(events.first).to eq(sorted_events.last)
-    expect(events.second).to eq(sorted_events.second)
-    expect(events.third).to eq(sorted_events.first)
-  end
-
   describe '.without_genres' do
     let(:event) { create(:event, :with_address, :with_event_artists, :with_genres) }
     let(:genre_id) { create(:genre, name: 'test_genre').id }

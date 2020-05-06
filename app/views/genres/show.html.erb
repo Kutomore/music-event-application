@@ -8,14 +8,22 @@
   <dd><%= @genre.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @genre.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:future_events) %>:</strong></dt>
+  <% @genre.events.with_past_date.each do |event| %>
+    <dd><%= link_to event.name, event_path(event) %></dd>
+  <% end %>
+  <dt><strong><%= model_class.human_attribute_name(:past_events) %>:</strong></dt>
+  <% @genre.events.with_past_date('true').each do |event| %>
+    <dd><%= link_to event.name, event_path(event) %></dd>
+  <% end %>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               genres_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_genre_path(@genre), :class => 'btn btn-default' %>
+              edit_genre_path(@genre), :class => 'btn btn-default' if user_signed_in? %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               genre_path(@genre),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+              :class => 'btn btn-danger' if user_signed_in? %>
