@@ -55,6 +55,14 @@
       <%= ff.label :time_zone %>
       <%= ff.time_zone_select(:time_zone, nil, { default: "Brasilia" }, { class: 'form-control' }) %>
     </div>
+    <%= ff.fields_for :address, Address.new do |fff|%>
+      <div class="well row">
+        <h4>Address</h4>
+        <div class="col-md-12">
+          <%= render partial: 'addresses/form', locals: { ff: fff }  %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
 
