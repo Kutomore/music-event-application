@@ -10,5 +10,6 @@ describe 'artists/show' do
   it 'renders attributes in <p>' do
     render
     expect(rendered).to match(/Name/)
+    assert_select 'a', text: 'Back'.to_s, count: 1
   end
 end

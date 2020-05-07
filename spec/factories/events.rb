@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :event do
     name { Faker::Music.album }
     event_type { Event.event_types.keys[rand(0..1)] }
-    date { Faker::Time.between(from: DateTime.now - 100.days, to: DateTime.now + 100.days ) }
+    date { Faker::Time.between(from: DateTime.now - 100.days, to: DateTime.now + 100.days) }
 
     trait :with_event_artists do
       after(:build) do |event|

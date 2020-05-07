@@ -51,6 +51,11 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.include RequestSpecHelper, type: :view
+  config.include RequestSpecHelper, type: :request
+  config.include Devise::Test::ControllerHelpers, type: :view
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 

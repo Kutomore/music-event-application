@@ -5,15 +5,12 @@ describe ProfileDecorator do
   let(:decorated) { profile.decorate }
 
   it 'is expected to humanize gender' do
-    expect(decorated.gender).to eq(event.gender.humanize)
+    expect(decorated.gender).to eq(profile.gender.humanize)
   end
   it 'is expected to decorate genres' do
-    expect(decorated.genres).to eq(event.genres.map(&:name).join(', '))
+    expect(decorated.genres).to eq(profile.genres.map(&:name).join(', '))
   end
   it 'is expected to decorate address' do
-    expect(decorated.address.to_s).to eq(event.address.decorate.to_s)
+    expect(decorated.address.to_s).to eq(profile.address.decorate.to_s)
   end
-
-
-
 end

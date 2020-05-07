@@ -7,14 +7,19 @@ describe 'genres/new' do
                      description: 'MyText'
                    ))
   end
+  let(:user) { create(:user, :with_profile) }
 
-  it 'renders new genre form' do
-    render
+  context 'while logged in' do
+    it 'renders new genre form' do
+      sign_in(user)
 
-    assert_select 'form[action=?][method=?]', genres_path, 'post' do
-      assert_select 'input[name=?]', 'genre[name]'
+      render
 
-      assert_select 'input[name=?]', 'genre[description]'
+      assert_select 'form[action=?][method=?]', genres_path, 'post' do
+        assert_select 'input[name=?]', 'genre[name]'
+
+        assert_select 'textarea[name=?]', 'genre[description]'
+      end
     end
   end
 end

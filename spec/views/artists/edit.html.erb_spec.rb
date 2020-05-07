@@ -7,11 +7,16 @@ describe 'artists/edit' do
                               ))
   end
 
-  it 'renders the edit artist form' do
-    render
+  let(:user) { create(:user, :with_profile) }
 
-    assert_select 'form[action=?][method=?]', artist_path(@artist), 'post' do
-      assert_select 'input[name=?]', 'artist[name]'
+  context 'while logged in' do
+    it 'renders the edit artist form' do
+      sign_in(user)
+      render
+
+      assert_select 'form[action=?][method=?]', artist_path(@artist), 'post' do
+        assert_select 'input[name=?]', 'artist[name]'
+      end
     end
   end
 end

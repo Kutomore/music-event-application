@@ -8,13 +8,12 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event
-              .with_genres(params[:genre_ids].to_a + current_user&.genre_ids.to_a)
+              .with_genres(params[:genre_ids])
               .without_genres(params[:exclude_genre_ids])
               .with_past_date(params[:with_past_date])
               .decorate
               .distinct
               .includes(:genres, :artists, :address)
-
   end
 
   # GET /events/1
@@ -80,7 +79,7 @@ class EventsController < ApplicationController
   end
 
   def set_filters
-    if current_user && params[:commit].blank?
+    if current_user && params[:commit].blank? && params[:genre_ids].blank? && params[:exclude_genre_ids].blank?
       params[:exclude_genre_ids] = current_user.genre_ids
     end
   end

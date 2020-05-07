@@ -31,6 +31,8 @@ class Event < ApplicationRecord
   private
 
   def event_artists_size
-    errors.add(:event_artists, 'concerts can only have one artist') if event_artists.count > 1
+    if event_artists.count > 1
+      errors.add(:event_artists, 'concerts can only have one artist')
+    end
   end
 end

@@ -9,7 +9,7 @@ describe Event do
   it { is_expected.to validate_presence_of(:genres) }
   it { is_expected.to define_enum_for(:event_type).with_values(concert: 0, festival: 1) }
 
-  context 'is a concert' do
+  context 'when it is a concert' do
     context 'with a single artist' do
       subject { create(:event, :with_genres, :with_event_artists, :with_address, event_type: :concert) }
       it { is_expected.to be_valid }
@@ -60,6 +60,5 @@ describe Event do
       expect(Event.with_past_date('false')).to include(future_event)
       expect(Event.with_past_date('false')).not_to include(past_event)
     end
-
   end
 end

@@ -16,7 +16,4 @@ describe EventDecorator do
   it 'is expected to decorate address' do
     expect(decorated.address.to_s).to eq(event.address.decorate.to_s)
   end
-
-
-
 end

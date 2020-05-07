@@ -7,11 +7,10 @@ describe 'events/index' do
 
   it 'renders a list of events' do
     render
-    assert_select 'tr', count: 3
-    assert_select 'td', count: 14
+    assert_select 'tr', count: 6
+    assert_select 'td', count: 16
     assert_select 'a[href=?]', '/events/new'
-    assert_select 'a', text: 'Edit'
-    assert_select 'a', text: 'Delete'
+    assert_select 'a', text: 'Show'
   end
   it 'renders the filters' do
     render

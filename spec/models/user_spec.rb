@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
-RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe User do
+  it { is_expected.to belong_to(:profile) }
+  it { is_expected.to delegate_method(:time_zone).to(:profile) }
+  it { is_expected.to delegate_method(:genre_ids).to(:profile) }
+  it { is_expected.to accept_nested_attributes_for(:profile) }
 end

@@ -2,14 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'profiles/show', type: :view do
+describe 'profiles/show' do
   before(:each) do
-    @profile = assign(:profile, Profile.create!(
-                                  name: 'Name',
-                                  email: 'Email',
-                                  phone: 'Phone',
-                                  gender: 2
-                                ))
+    @profile = assign(:profile, FactoryBot.create(:profile, :with_address))
   end
 
   it 'renders attributes in <p>' do

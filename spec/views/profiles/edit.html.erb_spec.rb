@@ -4,25 +4,26 @@ require 'rails_helper'
 
 RSpec.describe 'profiles/edit', type: :view do
   before(:each) do
-    @profile = assign(:profile, Profile.create!(
-                                  name: 'MyString',
-                                  email: 'MyString',
-                                  phone: 'MyString',
-                                  gender: 1
-                                ))
+    @profile = assign(:profile, create(:profile, :with_address))
   end
 
-  it 'renders the edit profile form' do
-    render
+  let(:user) { create(:user, :with_profile) }
 
-    assert_select 'form[action=?][method=?]', profile_path(@profile), 'post' do
-      assert_select 'input[name=?]', 'profile[name]'
+  context 'while logged in' do
+    it 'renders the edit profile form' do
+      sign_in(user)
 
-      assert_select 'input[name=?]', 'profile[email]'
+      render
 
-      assert_select 'input[name=?]', 'profile[phone]'
+      assert_select 'form[action=?][method=?]', profile_path(@profile), 'post' do
+        assert_select 'input[name=?]', 'profile[name]'
 
-      assert_select 'input[name=?]', 'profile[gender]'
+        assert_select 'input[name=?]', 'profile[email]'
+
+        assert_select 'input[name=?]', 'profile[phone]'
+
+        assert_select 'select[name=?]', 'profile[gender]'
+      end
     end
   end
 end

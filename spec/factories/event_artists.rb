@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :event_artist do
-    sequence(:playing_order) { |n| n}
+    sequence(:playing_order) { |n| n }
 
     trait :with_event do
       after(:build) do |relationship|
