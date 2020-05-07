@@ -2,12 +2,13 @@
 
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
+  before_action :set_filters, only: :index
 
   # GET /events
   # GET /events.json
   def index
     @events = Event
-              .with_genres(params[:genre_ids])
+              .with_genres(params[:genre_ids].to_a + current_user&.genre_ids.to_a)
               .without_genres(params[:exclude_genre_ids])
               .with_past_date(params[:with_past_date])
               .decorate
@@ -76,6 +77,12 @@ class EventsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def set_filters
+    if current_user && params[:commit].blank?
+      params[:exclude_genre_ids] = current_user.genre_ids
+    end
   end
 
   # Only allow a list of trusted parameters through.

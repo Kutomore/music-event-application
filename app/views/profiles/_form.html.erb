@@ -1,4 +1,4 @@
-<%= form_with(model: profile, local: true) do |form| %>
+<%= form_with(model: profile, local: true) do |f| %>
   <% if profile.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
@@ -11,32 +11,53 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  # Todo FIX THIS has_many genres
-  <div class="field">
-    <%= form.label :birthdate %>
-    <%= form.date_select :birthdate %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= f.label :gender %>
+    <%= f.select :gender, Profile.genders.keys.map { |w| [w.humanize, w] }, {} , { class: 'form-control' } %>
   </div>
 
   <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone %>
+    <%= f.label :birthdate %>
+    <%= f.text_field :birthdate, class: 'form-control', 'data-provide': 'datepicker', 'data-date-format':"yyyy-mm-dd" %>
   </div>
 
   <div class="field">
-    <%= form.label :gender %>
-    <%= form.number_field :gender %>
+    <%= f.label :email %>
+    <%= f.text_field :email, class: 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= f.label :phone %>
+    <%= f.text_field :phone , class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :omit_these_genres %>
+    <div class="form-control-checkboxes checkbox-list">
+      <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name, {:selected => profile.genre_ids} )%>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select(:time_zone, nil, { default: "Brasilia" }, { class: 'form-control' }) %>
+  </div>
+
+  <%= f.fields_for :address do |ff|%>
+    <div class="well row">
+      <h4>Address</h4>
+      <div class="col-md-12">
+        <%= render partial: 'addresses/form', locals: { ff: ff }  %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
   </div>
 <% end %>

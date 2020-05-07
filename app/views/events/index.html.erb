@@ -70,7 +70,11 @@
             </div>
           </div>
         </div>
-
+        <div class="row col-md-12">
+          <label>
+            <%= check_box nil, :with_past_date, { checked: params[:with_past_date] == 'true' }, true, false %> Show past events
+          </label>
+        </div>
         <div class="nav nav-list" style="margin-top: 10px">
           <%= submit_tag "Apply", class: 'btn btn-primary' %>
           <%= submit_tag "Clear", class: 'btn btn-info', onclick: "uncheckAll(event)" %>
