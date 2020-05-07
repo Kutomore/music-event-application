@@ -20,6 +20,7 @@ module Users
           :sign_up,
           keys: [
               :attribute,
+              :username,
               profile_attributes: [
                   :name,
                   :gender,

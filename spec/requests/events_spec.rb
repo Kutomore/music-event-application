@@ -47,7 +47,7 @@ describe '/events' do
 
           get events_url, params: { commit: 'apply' }
 
-          expect(response.body).to include(valid_attributes[:name])
+          expect(response.body).to include(CGI::escapeHTML(valid_attributes[:name]))
           expect(response.body).to include('Test Name')
         end
       end
@@ -58,7 +58,7 @@ describe '/events' do
 
           get events_url
 
-          expect(response.body).not_to include(valid_attributes[:name])
+          expect(response.body).not_to include(CGI::escapeHTML(valid_attributes[:name]))
         end
         it 'should return events without user avoided genres' do
           Event.create! valid_attributes.merge(
@@ -78,7 +78,7 @@ describe '/events' do
 
           get events_url, params: { genre_ids: valid_attributes[:genre_ids] }
 
-          expect(response.body).to include(valid_attributes[:name])
+          expect(response.body).to include(CGI::escapeHTML(valid_attributes[:name]))
         end
         it 'shouldnt return events without the specified genres' do
           Event.create! valid_attributes.merge(
