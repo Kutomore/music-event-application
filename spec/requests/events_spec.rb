@@ -72,11 +72,11 @@ describe '/events' do
         end
       end
 
-      context 'with genre_ids params' do
+      context 'with with_genres params' do
         it 'should return events with the specified genres' do
           Event.create! valid_attributes
 
-          get events_url, params: { genre_ids: valid_attributes[:genre_ids] }
+          get events_url, params: { with_genres: valid_attributes[:genre_ids] }
 
           expect(response.body).to include(CGI::escapeHTML(valid_attributes[:name]))
         end
@@ -86,7 +86,7 @@ describe '/events' do
             genre_ids: [Genre.create(name: 'Test Genre', description: 'Test').id]
           )
 
-          get events_url, params: { genre_ids: valid_attributes[:genre_ids] }
+          get events_url, params: { with_genres: valid_attributes[:genre_ids] }
 
           expect(response.body).not_to include('Test Name')
         end

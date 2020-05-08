@@ -2,7 +2,7 @@
 
 describe 'events/index' do
   before(:each) do
-    assign(:events, create_list(:event, 2, :with_address, :with_genres, :with_event_artists))
+    assign(:events, create_list(:event, 2, :with_address, :with_genres, :with_event_artists).group_by(&:date))
   end
 
   it 'renders a list of events' do

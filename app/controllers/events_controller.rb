@@ -76,8 +76,8 @@ class EventsController < ApplicationController
   end
 
   def set_filters
-    if current_user && params[:commit].blank? && params[:genre_ids].blank? && params[:exclude_genre_ids].blank?
-      params[:exclude_genre_ids] = current_user.genre_ids
+    if current_user && params[:commit].blank? && params[:with_genres].blank? && params[:without_genres].blank?
+      params[:without_genres] = current_user.genre_ids
     end
   end
 

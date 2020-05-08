@@ -15,8 +15,6 @@ services:
     build: .
     restart: always
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -p 3000"
-    volumes:
-      - .:/music-event-application
     ports:
       - "3000:3000"
     stdin_open: true
