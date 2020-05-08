@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :username, uniqueness: true
+
   belongs_to :profile
 
   delegate :time_zone, :genre_ids, to: :profile

@@ -1,0 +1,33 @@
+<div class="col-sm-4">
+  <div class="well sidebar-nav no-side-padding">
+    <h3>Filters</h3>
+    <div class="nav nav-list">
+      <input id="SearchBar" placeholder="Search for options.." type="text" oninput="updateCheckboxes(this)" autocomplete="off">
+      <div class="col-md-6 checkbox-list no-side-padding">
+        <div class="nav-header">Include these genres</div>
+        <div class="form-control-checkboxes form-control-checkboxes_tall">
+          <%= collection_check_boxes(nil, :with_genres, Genre.where.not(id: params[:without_genres]), :id, :name, {include_hidden: false}) do |b| %>
+            <%= b.label { b.check_box(checked: params[:with_genres]&.include?(b.value), text: b.text) + b.text } %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-6 checkbox-list no-side-padding">
+        <div class="nav-header">Exclude these genres</div>
+        <div class="form-control-checkboxes form-control-checkboxes_tall">
+          <%= collection_check_boxes(nil, :without_genres, Genre.where.not(id: params[:with_genres]), :id, :name, {include_hidden: false}) do |b| %>
+            <%= b.label { b.check_box(checked: params[:without_genres]&.include?(b.value), text: b.text) + b.text } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <label>
+        <%= check_box nil, :with_past_date, { checked: params[:with_past_date] == 'true' }, true, false %> Show past events
+      </label>
+    </div>
+    <div class="nav nav-list" style="margin-top: 10px">
+      <%= submit_tag "Apply", class: 'btn btn-primary' %>
+      <%= submit_tag "Clear", class: 'btn btn-info', onclick: "uncheckAll(event)" %>
+    </div>
+  </div>
+</div>

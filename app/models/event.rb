@@ -12,6 +12,7 @@ class Event < ApplicationRecord
 
   enum event_type: { concert: 0, festival: 1 }
 
+  default_scope { distinct.includes(:genres, :artists, :address) }
   scope :without_genres, lambda { |genre_ids = nil|
     unless genre_ids.blank?
       left_joins(:genres).where.not(genres: { id: genre_ids })

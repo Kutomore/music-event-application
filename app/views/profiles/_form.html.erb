@@ -1,15 +1,5 @@
 <%= form_with(model: profile, local: true) do |f| %>
-  <% if profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-
-      <ul>
-        <% profile.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: 'layouts/form_errors', locals: { resource: profile }%>
 
   <div class="form-group">
     <%= f.label :name %>
@@ -39,7 +29,7 @@
   <div class="form-group">
     <%= f.label :omit_these_genres %>
     <div class="form-control-checkboxes checkbox-list">
-      <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name, {:selected => profile.genre_ids} )%>
+      <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name, {selected: profile.genre_ids} )%>
     </div>
   </div>
 

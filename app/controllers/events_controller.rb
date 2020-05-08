@@ -3,17 +3,14 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
   before_action :set_filters, only: :index
+  has_scope :with_genres, type: :array
+  has_scope :without_genres, type: :array
+  has_scope :with_past_date
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event
-              .with_genres(params[:genre_ids])
-              .without_genres(params[:exclude_genre_ids])
-              .with_past_date(params[:with_past_date])
-              .decorate
-              .distinct
-              .includes(:genres, :artists, :address)
+    @events = apply_scopes(Event).decorate.group_by(&:date)
   end
 
   # GET /events/1
@@ -87,12 +84,12 @@ class EventsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def event_params
     params.require(:event).permit(
-      :name,
-      :event_type,
-      :date,
-      artist_ids: [],
-      genre_ids: [],
-      address_attributes: %i[
+        :name,
+        :event_type,
+        :date,
+        artist_ids: [],
+        genre_ids: [],
+        address_attributes: %i[
         id
         street
         city

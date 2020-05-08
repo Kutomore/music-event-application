@@ -6,7 +6,7 @@ class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.json
   def index
-    @artists = Artist.all
+    @artists = Artist.all.includes(event_artists: :event)
   end
 
   # GET /artists/1

@@ -1,15 +1,8 @@
 <h1><%= t('.sign_up') %></h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <% if resource.errors.any? %>
-    <div class="form_error">
-      <ul>
-        <% resource.errors.full_messages.each do |msg| %>
-          <li><%='Error: ' +  msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: 'layouts/form_errors', locals: { resource: resource }%>
+
   <div class="form-group">
     <%= f.label :username %>
     <%= f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control' %>

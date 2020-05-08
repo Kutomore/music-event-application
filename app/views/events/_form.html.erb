@@ -1,4 +1,5 @@
-<%= form_for @event, :html => { :class => "form-horizontal event" } do |f| %>
+<%= form_for @event, html: { class: "form-horizontal event" } do |f| %>
+  <%= render partial: 'layouts/form_errors', locals: { resource: @event }%>
 
   <% if @event.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
@@ -16,25 +17,25 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <%= f.label :name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :name, :class => 'form-control' %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :event_type, :class => 'control-label col-lg-2' %>
+    <%= f.label :event_type, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.collection_select(:event_type, Event.event_types.map {|k, v| [k, k.humanize.capitalize]}, :first, :second, {selected: @event.event_type}, class: 'form-control') %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :date, :class => 'control-label col-lg-2' %>
+    <%= f.label :date, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :date, :class => 'form-control' %>
+      <%= f.text_field :date, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :artists, :class => 'control-label col-lg-2' %>
+    <%= f.label :artists, class: 'control-label col-lg-2' %>
     <div class="col-lg-10 checkbox-list">
       <div class="form-control-checkboxes">
         <%= f.collection_check_boxes(:artist_ids, Artist.all, :id, :name, {selected: @event.artist_ids}) %>
@@ -46,7 +47,7 @@
     <%= f.label :genres, class: 'control-label col-lg-2' %>
     <div class="col-lg-10 checkbox-list">
       <div class="form-control-checkboxes">
-        <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name, {:selected => @event.genre_ids} )%>
+        <%= f.collection_check_boxes(:genre_ids, Genre.all, :id, :name, {selected: @event.genre_ids} )%>
       </div>
     </div>
   </div>
@@ -59,9 +60,9 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                events_path, :class => 'btn btn-default' %>
+      <%= f.submit nil, class: 'btn btn-primary' %>
+      <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                events_path, class: 'btn btn-default' %>
     </div>
   </div>
 
