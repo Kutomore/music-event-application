@@ -1,0 +1,29 @@
+version: '2'
+services:
+  db:
+    container_name: postgre_sql
+    image: postgres:11
+    restart: always
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - '.env'
+
+  web:
+    build: .
+    restart: always
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -p 3000"
+    volumes:
+      - .:/music-event-application
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    env_file:
+      - '.env'
+networks:
+    default:
+        external:
+            name: musicevent_default
